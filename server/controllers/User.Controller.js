@@ -56,18 +56,8 @@ const UserController = {
         }
     },
 
-    async getUserById(req, res) {
-        const ID = req.params.id;
-        try {
-            let result = await db.users.findAll({
-                where: {
-                    id: ID
-                }
-            });
-            res.status(200).send(result);
-        } catch (e) {
-            res.status(500).send({ message: e });
-        }
+    async getUserProfile(req, res) {
+        res.status(200).send(req.user);
     },
 
     async updateUser(req, res) {

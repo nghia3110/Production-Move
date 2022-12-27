@@ -14,15 +14,15 @@ const verifyToken = async (req, res, next) => {
             });
             next();
         } catch (err) {
-            res.status(401).send({message: 'Not authorize, token failed!'});
+            res.status(401).send({message: `Not authorize, token failed!`});
         }
     } else {
         res.status(401).send({message: 'Not authorize, no token found!'});
     }
 }
 
-const verifyAdmin = async (req, res, next) => {
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+//const verifyAdmin = async (req, res, next) => {
+    /* if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             var token = req.headers.authorization.split(' ')[1];
             var decoded = jwt.verify(token, process.env.JWT_SECRETKEY);
@@ -42,7 +42,7 @@ const verifyAdmin = async (req, res, next) => {
         }
     } else {
         res.status(401).send({message: 'Not authorize, no token found!'});
-    }
-}
+    } */
+//}
 
-module.exports = (verifyToken, verifyAdmin);
+module.exports = (verifyToken);
