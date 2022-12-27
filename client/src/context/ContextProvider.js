@@ -12,6 +12,7 @@ export const ContextProvider = ({ children }) => {
     const [currentColor, setCurrentColor] = useState('#03C9D7');
     const [activeMenu, setActiveMenu] = useState(true);
     const [isClicked, setIsClicked] = useState(initialState);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   
     const setColor = (color) => {
@@ -22,7 +23,7 @@ export const ContextProvider = ({ children }) => {
     const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true });
   
     return (
-      <StateContext.Provider value={{currentColor, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setColor}}>
+      <StateContext.Provider value={{showSuccessModal, currentColor, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setColor, setShowSuccessModal}}>
         {children}
       </StateContext.Provider>
     );

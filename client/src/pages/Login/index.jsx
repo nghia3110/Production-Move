@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Loading from "../../components/Loading";
 import login from "../../api/login";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../../components/ErrorMessage";
 
 function Login({ setToken }) {
     const [inputs, setInputs] = useState({});

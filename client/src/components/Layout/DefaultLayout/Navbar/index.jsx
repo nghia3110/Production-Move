@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import avatar from '../../../../assets/avatar.jpg';
 import Notification from '../../../Notification';
@@ -59,14 +58,14 @@ const Navbar = () => {
           >
             <img
               className="rounded-full w-8 h-8"
-              src={avatar}
+              src={avatar} //api
               alt="user-profile"
             />
             <p>
               <span className="text-gray-400 text-14">Hi,</span>{' '}
-              <span className="text-gray-400 font-bold ml-1 text-14">
-                Admin
-              </span>
+              <span className="text-gray-400 font-bold ml-1 text-14"> 
+                Admin 
+              </span> 
             </p>
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
