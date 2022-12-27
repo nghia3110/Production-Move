@@ -1,4 +1,4 @@
-function Home() {
+function AdminHome() {
     return ( 
         <div>
             <h2>Admin Home page</h2>
@@ -6,4 +6,4 @@ function Home() {
      );
 }
 
-export default Home;
+export default AdminHome;

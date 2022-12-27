@@ -1,0 +1,14 @@
+#errorMessage {
+    animation: click-animate ease 0.5s;
+}
+
+@keyframes click-animate{
+    from{
+        opacity: 0;
+        transform: translateX(-140px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

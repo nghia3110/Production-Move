@@ -138,21 +138,22 @@ const UserController = {
             }
         });
 
-        if(Object.keys(user).length === 0) {
-            res.status(406).send({message: "Email not found!"});
-        } else {
+        if(user) {
             const match = await bcrypt.compare(userInput.password, user.password);
 
             if(match) {
+                let token = generateToken(user.id);
                 res.send({
                     username: user.username,
                     email: user.email,
                     role_id: user.role_id,
-                    token: generateToken(user.id)
+                    token: token
                 });
             } else {
                 res.status(406).send({message: "Password is not correct!"});
             }
+        } else {
+            res.status(406).send({message: "Email not found!"});
         }
     }
 }

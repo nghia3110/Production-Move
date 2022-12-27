@@ -1,13 +1,33 @@
 import { Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { DefaultLayout } from './components/Layout';
-import { publicRoutes } from './router';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { DefaultLayout, FormLayout } from './components/Layout';
+import useRoutes from './router';
+import Login from './pages/Login';
+import AdminHome from './pages/Admin/AdminHome';
+import useToken from './hooks/useToken';
+import SignUp from './pages/Signup';
 
 function App() {
+  const publicRoutes = useRoutes();
+  const { token, setToken } = useToken();
+
+  if (!token) {
+    return (
+      <Router>
+        <Routes>
+          <Route path='/' element={<FormLayout><Login setToken={setToken} /></FormLayout>} />
+          <Route path='/sign-up' element={<FormLayout><SignUp /></FormLayout>} />
+          <Route path='*' element={<Navigate to='/' />} />
+        </Routes>
+      </Router>
+    )
+  }
+
   return (
     <Router>
       <div className="App">
         <Routes>
+          <Route path='/' element={<DefaultLayout><AdminHome /></DefaultLayout>}></Route>
           {publicRoutes.map((route, index) => {
             const Page = route.component;
             let Layout = DefaultLayout;

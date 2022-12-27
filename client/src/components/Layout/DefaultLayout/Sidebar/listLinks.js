@@ -6,7 +6,7 @@ const adminLinks = [
         title: 'Home',
         links: [
             {
-                name: 'adminhome',
+                name: 'admin-home',
                 text: 'Trang chủ',
                 icon: <FaHome />
             }
@@ -49,8 +49,8 @@ const factoryLinks = [
                 icon: <MdAdd />
             },
             {
-                name: 'sell',
-                text: 'Bán sản phẩm',
+                name: 'distribute',
+                text: 'Xuất sản phẩm',
                 icon: <MdSell />
             },
             {
@@ -58,11 +58,6 @@ const factoryLinks = [
                 text: 'Kho',
                 icon: <FaWarehouse />
             },
-            {
-                name: 'statistic',
-                text: 'Thống kê',
-                icon: <MdQueryStats />
-            }
         ]
     }
 ]
