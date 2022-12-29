@@ -4,72 +4,48 @@ import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inje
 import Header from '../../../components/Layout/DefaultLayout/Header';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import dataAPI from '../../../api/data';
+import productAPI from '../../../api/product';
+import { useStateContext } from '../../../context/ContextProvider';
 
 const Users = () => {
     const selectionsettings = { persistSelection: true };
     const toolbarOptions = ['Delete', 'Edit', 'Update', 'Cancel'];
     const editing = { allowDeleting: true, allowEditing: true };
-    const [usersData, setUsersData] = useState([]);
+    const [productsData, setProductsData] = useState([]);
+    const { userProfileData, setUserProfileData } = useStateContext();
 
-    const customerGridImage = (props) => (
-        <div className="image flex gap-4 items-center">
-          {/* <img
-            className="rounded-full w-10 h-10"
-            src={props.CustomerImage}
-            alt="employee"
-          /> */}
-          <div>
-            <p>{props.name}</p>
-          </div>
-        </div>
-      );
-
-    const usersGrid = [
+    const productsGrid = [
         { type: 'checkbox', width: '50' },
         {
-            headerText: 'Name',
+            field: 'imei',
+            headerText: 'IMEI',
             width: '150',
-            template: customerGridImage,
             textAlign: 'Center'
         },
         {
-            field: 'email',
-            headerText: 'Email',
+            field: 'productCode',
+            headerText: 'Product Code',
             width: '150',
+            textAlign: 'Center'
+        },
+        {
+            field: 'warehouseCode',
+            headerText: 'Warehouse Code',
+            width: '130',
             textAlign: 'Center'
         },
         {
             field: 'status',
             headerText: 'Status',
-            width: '130',
-            textAlign: 'Center',
-            editType: 'dropdownedit'
-        },
-        {
-            field: 'phoneNumber',
-            headerText: 'Phone Number',
             width: '150',
             textAlign: 'Center'
-        },
-        {
-            field: 'address',
-            headerText: 'Address',
-            width: '100',
-            textAlign: 'Center'
-        },
-        {
-            field: 'role',
-            headerText: 'Role',
-            width: '150',
-            textAlign: 'Center'
-        },
+        }
     ];
 
     useEffect(() => {
-        const getData = async() => {
-            const users = await dataAPI.getAllUser();
-            setUsersData(users);
+        const getData = async () => {
+            const products = await productAPI.getProduct(userProfileData.id);
+            setProductsData(products);
         }
 
         getData();
@@ -77,9 +53,9 @@ const Users = () => {
 
     return (
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl shadow-lg">
-            <Header category="Page" title="Users" />
+            <Header category="Page" title="Products" />
             <GridComponent
-                dataSource={usersData}
+                dataSource={productsData}
                 enableHover={true}
                 allowPaging
                 pageSettings={{ pageCount: 5 }}
@@ -89,7 +65,7 @@ const Users = () => {
                 allowSorting
             >
                 <ColumnsDirective>
-                    {usersGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+                    {productsGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
                 </ColumnsDirective>
                 <Inject services={[Page, Selection, Toolbar, Edit, Sort, Filter]} />
             </GridComponent>

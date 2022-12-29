@@ -1,5 +1,6 @@
 import { FaHome, FaList, FaWarehouse } from "react-icons/fa";
-import { MdPerson, MdAdd, MdSell, MdQueryStats} from "react-icons/md";
+import { MdPerson, MdAdd, MdSell, MdQueryStats } from "react-icons/md";
+import { TbTruckDelivery } from "react-icons/tb";
 
 const adminLinks = [
     {
@@ -29,13 +30,14 @@ const adminLinks = [
     }
 
 ];
+
 const factoryLinks = [
     {
         title: 'Home',
         links: [
             {
                 name: 'home',
-                text: 'Trang chủ', 
+                text: 'Trang chủ',
                 icon: <FaHome />
             }
         ]
@@ -54,7 +56,7 @@ const factoryLinks = [
                 icon: <MdSell />
             },
             {
-                name: 'list-product',
+                name: 'products',
                 text: 'Kho',
                 icon: <FaWarehouse />
             },
@@ -62,4 +64,70 @@ const factoryLinks = [
     }
 ]
 
-export { adminLinks, factoryLinks};
+const agencyLinks = [
+    {
+        title: 'Home',
+        links: [
+            {
+                name: 'home',
+                text: 'Trang chủ',
+                icon: <FaHome />
+            }
+        ]
+    },
+    {
+        title: 'Pages',
+        links: [
+            {
+                name: 'receive-from-factory',
+                text: 'Nhập sản phẩm',
+                icon: <MdAdd />
+            },
+            {
+                name: 'sell',
+                text: 'Bán sản phẩm',
+                icon: <MdSell />
+            },
+            {
+                name: 'products',
+                text: 'Kho',
+                icon: <FaWarehouse />
+            },
+            {
+                name: 'guarantee',
+                text: 'Bảo hành sản phẩm',
+                icon: <TbTruckDelivery />
+            },
+        ]
+    }
+];
+
+const guaranteeLinks = [
+    {
+        title: 'Home',
+        links: [
+            {
+                name: 'home',
+                text: 'Trang chủ',
+                icon: <FaHome />
+            }
+        ]
+    },
+    {
+        title: 'Pages',
+        links: [
+            {
+                name: 'giveback',
+                text: 'Trả sản phẩm',
+                icon: <MdSell />
+            },
+            {
+                name: 'products',
+                text: 'Kho',
+                icon: <FaWarehouse />
+            },
+        ]
+    }
+]
+
+export { adminLinks, factoryLinks, agencyLinks, guaranteeLinks };

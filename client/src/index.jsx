@@ -10,9 +10,7 @@ registerLicense(process.env.REACT_APP_LICENSE_KEY);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <ContextProvider>
       <App />
     </ContextProvider>
-  </React.StrictMode>
 );

@@ -3,11 +3,11 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaProductHunt } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { adminLinks, factoryLinks } from './listLinks';
+import { adminLinks, factoryLinks, agencyLinks, guaranteeLinks} from './listLinks';
 
 import { useStateContext } from '../../../../context/ContextProvider';
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
 
   const handleCloseSideBar = () => {
@@ -15,6 +15,9 @@ const Sidebar = () => {
       setActiveMenu(false);
     }
   };
+  const currentLinks = props.role == 'Quản trị viên' ? adminLinks 
+      : props.role == 'Cơ sở sản xuất' ? factoryLinks
+      : props.role == 'Đại lý' ? agencyLinks : guaranteeLinks;
 
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
@@ -39,7 +42,7 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
           <div className="mt-10 ">
-            {adminLinks.map((item, index) => (
+            {currentLinks.map((item, index) => (
               <div key={index}>
                 <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
                   {item.title}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 
@@ -7,7 +8,13 @@ import { useStateContext } from '../context/ContextProvider';
 import avatar from '../assets/avatar.jpg';
 
 const ProfileOption = () => {
-    const { currentColor } = useStateContext();
+    const { currentColor, userProfileData } = useStateContext();
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        localStorage.clear();
+        navigate(0);
+    }
 
     const profileDropdownItem = [
         {
@@ -20,7 +27,7 @@ const ProfileOption = () => {
     ]
 
     return (
-        <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
+        <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96 z-50">
             <div className="flex justify-between items-center">
                 <p className="font-semibold text-lg dark:text-gray-200">User Profile</p>
                 <Button
@@ -38,9 +45,9 @@ const ProfileOption = () => {
                     alt="user-profile"
                 />
                 <div>
-                    <p className="font-semibold text-xl dark:text-gray-200"> Admin </p>
-                    <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-                    <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> admin@gmail.com </p>
+                    <p className="font-semibold text-xl dark:text-gray-200"> {userProfileData.name}</p>
+                    <p className="text-gray-500 text-sm dark:text-gray-400">  {userProfileData.role}  </p>
+                    <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {userProfileData.email}</p>
                 </div>
             </div>
             <div>
@@ -62,13 +69,14 @@ const ProfileOption = () => {
                 ))}
             </div>
             <div className="mt-5">
-                <Button
-                    color="white"
-                    bgColor={currentColor}
-                    text="Logout"
-                    borderRadius="10px"
-                    width="full"
-                />
+                <button
+                    type="button"
+                    onClick={handleClick}
+                    style={{ backgroundColor: `${currentColor}`, borderRadius: "10px" }}
+                    className={` text-xl p-3 w-full hover:drop-shadow-xl hover:bg-${currentColor} text-white`}
+                >
+                    Logout
+                </button>
             </div>
         </div>
 

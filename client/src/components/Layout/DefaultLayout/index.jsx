@@ -5,12 +5,16 @@ import Navbar from "./Navbar";
 import { useStateContext } from "../../../context/ContextProvider";
 
 function DefaultLayout({ children }) {
-    const { activeMenu } = useStateContext();
+    const sidebarStyle = {
+        boxShadow: "rgb(113 122 131 / 11%) 0px 7px 30px 0px"
+    }
+
+    const { activeMenu, userProfileData, setUserProfileData } = useStateContext();
     return (
         <div className="flex relative dark:bg-main-dark-bg">
             {activeMenu ? (
-                <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-                    <Sidebar />
+                <div className="w-72 fixed dark:bg-secondary-dark-bg bg-white" style={sidebarStyle}>
+                    <Sidebar role={userProfileData.role}/>
                 </div>
             ) : (
                 <div className="w-0 dark:bg-secondary-dark-bg">

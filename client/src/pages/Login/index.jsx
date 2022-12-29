@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import Loading from "../../components/Loading";
 import login from "../../api/login";
 import ErrorMessage from "../../components/ErrorMessage";
+import { useStateContext } from "../../context/ContextProvider";
 
 function Login({ setToken }) {
     const [inputs, setInputs] = useState({});
     const [loading, setLoading] = useState(false);
     const [validEmail, setValidEmail] = useState(true);
     const [loginFailed, setLoginFailed] = useState(false);
-    
+    const [errorMessage, setErrorMessage] = useState('');
+    const { userProfileData, setUserProfileData, setOnLoginPage } = useStateContext();
+
     const handleCheckEmail = (event) => {
         let mail = event.target.value;
         let check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail);
@@ -18,22 +21,41 @@ function Login({ setToken }) {
         else setValidEmail(true);
     }
 
+    const showErrorMessage = (content) => {
+        setLoginFailed(true);
+        setLoading(false);
+        setErrorMessage(content);
+        setTimeout(() => {
+            setLoginFailed(false);
+        }, 5000);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userToken = await login({
+        const userData = await login({
             email: inputs.email,
             password: inputs.password
         });
-        if (!userToken) {
-            setLoginFailed(true);
-            setLoading(false);
-            setTimeout(() => {
-                setLoginFailed(false);
-            }, 5000);
-            
+        if (!userData.token) {
+            showErrorMessage('Email hoặc mật khẩu không đúng! Vui lòng kiểm tra lại!');
         }
-        else setToken(userToken);
+        else {
+            if (userData.status == 'Chờ kiểm duyệt') {
+                showErrorMessage('Tài khoản của bạn chưa được quản trị viên kiểm duyệt!');
+            } else {
+                setUserProfileData({
+                    id: userData.id,
+                    name: userData.name,
+                    email: userData.email,
+                    address: userData.address,
+                    phoneNumber: userData.phoneNumber,
+                    role: userData.role
+                });
+                setToken(userData.token);
+                setOnLoginPage(false);
+            }
+        }
     }
 
     const handleInputChange = (event) => {
@@ -44,7 +66,7 @@ function Login({ setToken }) {
 
     return (
         <div className='bg-white flex flex-col justify-center rounded-xl shadow-lg'>
-            {loginFailed && <ErrorMessage />}
+            {loginFailed && <ErrorMessage content={errorMessage} />}
             <h2 className='text-2xl dark:text-white font-bold text-center pt-4'>Đăng nhập</h2>
             {loading && <Loading />}
             <form

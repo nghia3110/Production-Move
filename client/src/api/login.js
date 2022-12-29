@@ -8,7 +8,7 @@ const login = async (input) => {
     }).then(response => response.json())
     .then(data => {
         if(data.message) return false;
-        return data.token;
+        return data;
     });
 }
 export default login;

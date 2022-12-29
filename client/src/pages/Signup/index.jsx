@@ -69,16 +69,6 @@ function SignUp() {
                                 <input
                                     className='p-2 rounded-lg bg-white mt-2 border border-solid border-gray-200 focus:border-blue-500 focus:outline-none'
                                     type="text"
-                                    name="username"
-                                    value={inputs.username || ""}
-                                    onChange={handleInputChange}
-                                    placeholder="Username"
-                                />
-                            </div>
-                            <div className='text-gray-400 py-2'>
-                                <input
-                                    className='p-2 rounded-lg bg-white mt-2 border border-solid border-gray-200 focus:border-blue-500 focus:outline-none'
-                                    type="text"
                                     name="name"
                                     value={inputs.name || ""}
                                     onChange={handleInputChange}
@@ -98,16 +88,14 @@ function SignUp() {
                                 {!validEmail && <span className="text-sm text-red-500 ml-1">Email không hợp lệ</span>}
                             </div>
                             <div className='text-gray-400 py-2'>
-                                <select
-                                    name="role"
-                                    value={inputs.role}
+                                <input
+                                    className='p-2 rounded-lg bg-white mt-2 border border-solid border-gray-200 focus:border-blue-500 focus:outline-none'
+                                    type="text"
+                                    name="address"
+                                    value={inputs.address || ""}
                                     onChange={handleInputChange}
-                                    className='w-full rounded-lg bg-white mt-2 p-2 border border-solid border-gray-200 focus:border-blue-500 focus:outline-none'
-                                >
-                                    <option value="Cơ sở sản xuất">Cơ sở sản xuất</option>
-                                    <option value="Trung tâm bảo hành">Trung tâm bảo hành</option>
-                                    <option value="Đại lý">Đại lý</option>
-                                </select>
+                                    placeholder="Address"
+                                />
                             </div>
                         </div>
 
@@ -142,17 +130,19 @@ function SignUp() {
                                     placeholder="PhoneNumber"
                                 />
                             </div>
-                            <div className='text-gray-400 py-2'>
-                                <input
-                                    className='p-2 rounded-lg bg-white mt-2 border border-solid border-gray-200 focus:border-blue-500 focus:outline-none'
-                                    type="text"
-                                    name="address"
-                                    value={inputs.address || ""}
-                                    onChange={handleInputChange}
-                                    placeholder="Address"
-                                />
-                            </div>
                         </div>
+                    </div>
+                    <div className='text-gray-400 py-2'>
+                        <select
+                            name="role"
+                            value={inputs.role}
+                            onChange={handleInputChange}
+                            className='w-full rounded-lg bg-white mt-2 p-2 border border-solid border-gray-200 focus:border-blue-500 focus:outline-none'
+                        >
+                            <option value="Cơ sở sản xuất">Cơ sở sản xuất</option>
+                            <option value="Trung tâm bảo hành">Trung tâm bảo hành</option>
+                            <option value="Đại lý">Đại lý</option>
+                        </select>
                     </div>
                     <button
                         className='w-full my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg'
@@ -162,7 +152,7 @@ function SignUp() {
                     </button>
                 </form>
                 <div className='text-black py-2 text-center mb-4'>
-                    <p>Bạn đã có tài khoản?<Link to={'/'} className="underline">Đăng nhập tại đây</Link></p>
+                    <p>Bạn đã có tài khoản? <Link to={'/'} className="underline">Đăng nhập tại đây</Link></p>
                 </div>
             </div>
             {showSuccessModal && <SuccessMessage content="Đăng ký thành công! Tài khoản của bạn sẽ được quản trị viên phê duyệt." />}
