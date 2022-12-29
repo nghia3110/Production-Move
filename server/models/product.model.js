@@ -1,29 +1,27 @@
 module.exports = (sequelize, Sequelize) => {
     const Product = sequelize.define('product', {
-        id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
+        imei: {
+            type: Sequelize.STRING,
             primaryKey: true
         },
-        name: {
+        productCode: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        serialNumber: {
+        warehouseCode: {
             type: Sequelize.STRING,
-            allowNull: false
+            defaultValue: null
         },
         status: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        ngaySanXuat: {
-            type: Sequelize.DATEONLY,
-            allowNull: false
+        guestId: {
+            type: Sequelize.INTEGER
         },
-        thoiGianBaoHanh: {
-            type: Sequelize.INTEGER,
-            allowNull: false
+        history: {
+            type: Sequelize.STRING,
+            defaultValue: ''
         }
     },
     {

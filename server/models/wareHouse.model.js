@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define('role', {
+    const Warehouse = sequelize.define('warehouse', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true
@@ -12,6 +12,5 @@ module.exports = (sequelize, Sequelize) => {
     {
         timestamps: false
     });
-
-    return Role;
+    return Warehouse;
 }

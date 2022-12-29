@@ -6,7 +6,7 @@ const generateToken = require('../utils/generateToken.js');
 const UserController = {
     async create(req, res) {
         const userData = req.body;
-        if (!userData.username || !userData.password || !userData.name || !userData.phoneNumber || !userData.address || !userData.role || !userData.email) {
+        if (!userData.password || !userData.name || !userData.phoneNumber || !userData.address || !userData.role || !userData.email) {
             res.status(400).send({
                 message: "Content can't be empty!"
             });
@@ -15,28 +15,23 @@ const UserController = {
 
         let findInDB = await db.users.findAll({
             where: {
-                [Op.or]: [{ username: userData.username }, { email: userData.email }, { phoneNumber: userData.phoneNumber }]
+                [Op.or]: [{ name: userData.name }, { email: userData.email }]
             }
         });
 
         if (findInDB.length != 0) {
             res.status(406).send({ message: "There is an account registered with given information. Please check username, phoneNumber or email!" });
         } else {
-            const result = await db.sequelize.query(`SELECT id FROM roles WHERE name = '${userData.role}'`, { type: QueryTypes.SELECT });
-            const roleID = result[0].id;
-            let status = 'Chờ kiểm duyệt';
-            if(roleID == 4) status = null;
             try {
                 const hashPassword = await bcrypt.hash(userData.password, 10);
                 const User = {
-                    username: userData.username,
-                    password: hashPassword,
                     name: userData.name,
+                    password: hashPassword,
                     email: userData.email,
                     phoneNumber: userData.phoneNumber,
                     address: userData.address,
-                    role_id: roleID,
-                    status: status
+                    role: userData.role,
+                    status: 'Đã kiểm duyệt'
                 };
 
                 await db.users.create(User);
@@ -49,7 +44,14 @@ const UserController = {
 
     async getAllUser(req, res) {
         try {
-            let result = await db.users.findAll();
+            let result = await db.users.findAll({
+                where: {
+                    [Op.not]: [{role: 'Quản trị viên'}]
+                },
+                attributes: {
+                    exclude: ['password']
+                }
+            });
             res.status(200).send(result);
         } catch (e) {
             res.status(500).send({ message: e });
@@ -61,16 +63,16 @@ const UserController = {
     },
 
     async updateUser(req, res) {
-        const currentID = req.params.id;
+        const currentID = req.user.id;
         const updateData = req.body;
-        if (!updateData.username || !updateData.name || !updateData.email || !updateData.phoneNumber || !updateData.address) {
+        if (!updateData.name || !updateData.email || !updateData.phoneNumber || !updateData.address) {
             res.status(400).send({ message: "Content can't be empty!" });
             return;
         }
 
         let findInDB = await db.users.findAll({
             where: {
-                [Op.or]: [{ username: updateData.username }, { name: updateData.name }, { email: updateData.email }, { phoneNumber: updateData.phoneNumber }]
+                [Op.or]: [{ name: updateData.name }, { email: updateData.email }]
             }
         });
 
@@ -80,7 +82,6 @@ const UserController = {
             try {
                 await db.users.update(
                     {
-                        username: updateData.username,
                         name: updateData.name,
                         email: updateData.email,
                         phoneNumber: updateData.phoneNumber,
@@ -134,10 +135,14 @@ const UserController = {
             if(match) {
                 let token = generateToken(user.id);
                 res.send({
-                    username: user.username,
+                    id: user.id,
+                    name: user.name,
                     email: user.email,
-                    role_id: user.role_id,
-                    token: token
+                    address: user.address,
+                    phoneNumber: user.phoneNumber,
+                    role: user.role,
+                    token: token,
+                    status: user.status
                 });
             } else {
                 res.status(406).send({message: "Password is not correct!"});

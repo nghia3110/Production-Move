@@ -1,20 +1,16 @@
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define('user', {
         id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
-            primaryKey: true
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
-        username: {
+        name: {
             type: Sequelize.STRING,
             allowNull: false,
             unique: true
         },
         password: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        name: {
             type: Sequelize.STRING,
             allowNull: false
         },
@@ -31,8 +27,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
-        role_id: {
-            type: Sequelize.INTEGER,
+        role: {
+            type: Sequelize.STRING,
             allowNull: false
         },
         status: {
@@ -40,7 +36,8 @@ module.exports = (sequelize, Sequelize) => {
         }
     }, 
     {
-        timestamps: false
+        timestamps: false,
+        initialAutoIncrement: 1
     });
     return User;
 }

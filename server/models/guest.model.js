@@ -1,13 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
     const Guest = sequelize.define('guest', {
         id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
+            type: Sequelize.INTEGER,
             primaryKey: true
         },
         name: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
         },
         phoneNumber: {
             type: Sequelize.STRING,
@@ -19,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     }, 
     {
-        timestamps: false
+        timestamps: false,
     });
     return Guest;
 }
